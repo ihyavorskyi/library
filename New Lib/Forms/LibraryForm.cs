@@ -315,26 +315,9 @@ namespace New_Lib
 
         private void buttonReturned_Click(object sender, EventArgs e)
         {
-            if (codeOnHands != "0")
-            {
-                DialogResult dialogResult = MessageBox.Show("Are you sure?", "INFO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    conn.Open();
-
-                    string query = "DELETE FROM `library`.`on_hands` WHERE(`Code` = '" + codeOnHands + "');";
-                    NewQuery.executeNonQuery(query, conn);
-
-                    query = "update book set count_in_library = count_in_library+1 where Code_book = " + uninversalCode;
-                    NewQuery.executeNonQuery(query, conn);
-
-                    MessageBox.Show("Book '" + title + "' has been returned", "INFO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    conn.Close();
-                    tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
-                    ShowCatalog.showMyBooks(conn, dataGridViewMyBooks, codeMember);
-                    ShowCatalog.showOnHandsBooks(conn, dataGridViewOnHands);
-                }
-            }
+            DataGridView[] dataGridViews = new DataGridView[] { dataGridViewCatalog, dataGridViewMyBooks, dataGridViewOnHands };
+            tableName = ReturnBook.returned(codeOnHands, conn, uninversalCode, title, tableName,
+                Query, dataGridViews, codeMember);
         }
 
         private void buttonUpdateOrAdd_Click(object sender, EventArgs e)
@@ -376,84 +359,12 @@ namespace New_Lib
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (uninversalCode != "0")
-            {
-                DialogResult dialogResult = MessageBox.Show("Are you sure?", "INFO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    conn.Open();
-                    switch (tableName)
-                    {
-                        case "book":
-                            DeleteFromDataBase.delete(tableName, "code_book", uninversalCode, conn);
-                            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
-                            break;
-
-                        case "author":
-                            DeleteFromDataBase.delete(tableName, "code_author", uninversalCode, conn);
-                            tableName = ShowCatalog.showAuthor(conn, dataGridViewCatalog);
-                            break;
-
-                        case "genre":
-                            DeleteFromDataBase.delete(tableName, "code_genre", uninversalCode, conn);
-                            tableName = ShowCatalog.showGenres(conn, dataGridViewCatalog);
-                            break;
-
-                        case "type":
-                            DeleteFromDataBase.delete(tableName, "code_type", uninversalCode, conn);
-                            tableName = ShowCatalog.showTypes(conn, dataGridViewCatalog);
-                            break;
-
-                        case "publishing_house":
-                            DeleteFromDataBase.delete(tableName, "Code_publish", uninversalCode, conn);
-                            tableName = ShowCatalog.showPubHouses(conn, dataGridViewCatalog);
-                            break;
-                    }
-                    conn.Close();
-                    MessageBox.Show("Deleted successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            tableName = DeleteFromDataBase.delete(uninversalCode, conn, tableName, dataGridViewCatalog, Query);
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            if (uninversalCode != "0")
-            {
-                DialogResult dialogResult = MessageBox.Show("Are you sure?", "INFO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    conn.Open();
-                    switch (tableName)
-                    {
-                        case "author":
-                            UpdateDataBase.updateAuthor(dataForUpdate, conn);
-                            tableName = ShowCatalog.showAuthor(conn, dataGridViewCatalog);
-                            break;
-
-                        case "book":
-                            UpdateDataBase.updateBook(dataForUpdate, conn);
-                            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
-                            break;
-
-                        case "genre":
-                            UpdateDataBase.updateGenre(dataForUpdate, conn);
-                            tableName = ShowCatalog.showGenres(conn, dataGridViewCatalog);
-                            break;
-
-                        case "type":
-                            UpdateDataBase.updateType(dataForUpdate, conn);
-                            tableName = ShowCatalog.showTypes(conn, dataGridViewCatalog);
-                            break;
-
-                        case "publishing_house":
-                            UpdateDataBase.updatePubHouse(dataForUpdate, conn);
-                            tableName = ShowCatalog.showPubHouses(conn, dataGridViewCatalog);
-                            break;
-                    }
-                    conn.Close();
-                    MessageBox.Show("Updated successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            tableName = UpdateDataBase.update(conn, uninversalCode, tableName, dataForUpdate, dataGridViewCatalog, Query);
         }
     }
 }
