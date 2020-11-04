@@ -106,15 +106,16 @@ namespace New_Lib
             dataForUpdate[1] = dataGridViewCatalog.Rows[selRowNum].Cells[1].Value.ToString();
             if (tableName == "author" || tableName == "publishing_house" || tableName == "book")
             {
-                dataForUpdate[2] = dataGridViewCatalog.Rows[selRowNum].Cells[2].Value.ToString();
-                dataForUpdate[3] = dataGridViewCatalog.Rows[selRowNum].Cells[3].Value.ToString();
-                dataForUpdate[4] = dataGridViewCatalog.Rows[selRowNum].Cells[4].Value.ToString();
+                for (int i = 2; i <= 4; i++)
+                {
+                    dataForUpdate[i] = dataGridViewCatalog.Rows[selRowNum].Cells[i].Value.ToString();
+                }
                 if (tableName == "book")
                 {
-                    dataForUpdate[5] = dataGridViewCatalog.Rows[selRowNum].Cells[5].Value.ToString();
-                    dataForUpdate[6] = dataGridViewCatalog.Rows[selRowNum].Cells[6].Value.ToString();
-                    dataForUpdate[7] = dataGridViewCatalog.Rows[selRowNum].Cells[7].Value.ToString();
-                    dataForUpdate[8] = dataGridViewCatalog.Rows[selRowNum].Cells[8].Value.ToString();
+                    for (int i = 5; i <= 8; i++)
+                    {
+                        dataForUpdate[i] = dataGridViewCatalog.Rows[selRowNum].Cells[i].Value.ToString();
+                    }
                 }
             }
         }
