@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WorkWithDataGrid\ShowCatalog.cs" />
     <Compile Include="WorkWithDataGrid\AddColumnToDataGridView.cs" />
     <Compile Include="WorkWithDataGrid\AddRowsToDataGridView.cs" />
     <Compile Include="WorkWithDataBase\AddToDataBase.cs" />

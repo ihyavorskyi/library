@@ -1,6 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace New_Lib
@@ -38,9 +37,9 @@ namespace New_Lib
                 "author_list.Code_author=author.Code_author ";
 
             isAdmin();
-            showBookCatalog(Query + " order by book.Code_book;");
-            showMyBooks();
-            showOnHandsBooks();
+            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
+            ShowCatalog.showMyBooks(conn, dataGridViewMyBooks, codeMember);
+            ShowCatalog.showOnHandsBooks(conn, dataGridViewOnHands);
         }
 
         private string GetConnection()
@@ -57,170 +56,43 @@ namespace New_Lib
 
         private void booksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showBookCatalog(Query + "order by book.Code_book");
+            isAdd(false);
+            isDeleteUpdate();
+            isTake(1);
+            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
+            isUser();
         }
 
         private void authorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showAuthor();
+            isCheck();
+            tableName = ShowCatalog.showAuthor(conn, dataGridViewCatalog);
+            isUser();
         }
 
         private void publishingHousesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showPubHouses();
+            isCheck();
+            tableName = ShowCatalog.showPubHouses(conn, dataGridViewCatalog);
+            isUser();
         }
 
         private void membersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showMembers();
+            isCheck();
+            tableName = ShowCatalog.showMembers(conn, dataGridViewCatalog);
         }
 
         private void genresToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showGenres();
+            isCheck();
+            tableName = ShowCatalog.showGenres(conn, dataGridViewCatalog);
         }
 
         private void typesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showTypes();
-        }
-
-        private void showBookCatalog(string query)
-        {
-            isAdd(false);
-            isDeleteUpdate();
-            isTake(1);
-            tableName = "book";
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
-            dataGridViewCatalog = AddColumnToDataGridView.addColumnToBookCatalog(dataGridViewCatalog);
-
-            conn.Open();
-            MySqlDataReader reader = NewQuery.executeReader(query, conn);
-            List<string[]> data = NewStringList.books(reader);
-            conn.Close();
-
-            AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
-            isUser();
-        }
-
-        private void showAuthor()
-        {
             isCheck();
-            tableName = "author";
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
-            dataGridViewCatalog = AddColumnToDataGridView.addColumnToAuthohrs(dataGridViewCatalog);
-
-            conn.Open();
-            MySqlDataReader reader = NewQuery.executeReader("select * from author", conn);
-            List<string[]> data = NewStringList.authors(reader);
-            conn.Close();
-
-            AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
-            isUser();
-        }
-
-        private void showPubHouses()
-        {
-            isCheck();
-            tableName = "publishing_house";
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
-            dataGridViewCatalog = AddColumnToDataGridView.addColumnToPubHouses(dataGridViewCatalog);
-
-            conn.Open();
-            MySqlDataReader reader = NewQuery.executeReader("select * from `publishing_house`", conn);
-            List<string[]> data = NewStringList.pubHouse(reader);
-            conn.Close();
-
-            AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
-            isUser();
-        }
-
-        private void showMembers()
-        {
-            isCheck();
-            tableName = "members";
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
-            dataGridViewCatalog = AddColumnToDataGridView.addColumnToMembers(dataGridViewCatalog);
-
-            conn.Open();
-            MySqlDataReader reader = NewQuery.executeReader("select * from members", conn);
-            List<string[]> data = NewStringList.members(reader);
-            conn.Close();
-
-            AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
-        }
-
-        private void showGenres()
-        {
-            tableName = "genre";
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
-
-            dataGridViewCatalog.Columns.Add("Code_genre", "ID");
-            dataGridViewCatalog.Columns[0].ReadOnly = true;
-            dataGridViewCatalog.Columns.Add("Name_genre", "Genre name");
-
-            conn.Open();
-            MySqlDataReader reader = NewQuery.executeReader("select * from genre", conn);
-            List<string[]> data = NewStringList.genres(reader);
-            conn.Close();
-
-            AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
-        }
-
-        private void showTypes()
-        {
-            isCheck();
-            tableName = "type";
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
-            dataGridViewCatalog.Columns.Add("Code_type", "ID");
-            dataGridViewCatalog.Columns[0].ReadOnly = true;
-            dataGridViewCatalog.Columns.Add("Name_type", "Type name");
-
-            conn.Open();
-            MySqlDataReader reader = NewQuery.executeReader("select * from type", conn);
-            List<string[]> data = NewStringList.types(reader);
-            conn.Close();
-
-            AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
-        }
-
-        private void showMyBooks()
-        {
-            dataGridViewMyBooks = AddColumnToDataGridView.ClearDataGridView(dataGridViewMyBooks);
-            dataGridViewMyBooks = AddColumnToDataGridView.addColumnToMyBook(dataGridViewMyBooks);
-
-            conn.Open();
-            string query = "SELECT book.Code_book,Title,Name_genre,Name_type,publishing_house.Name," +
-                "author.Name,author.Surname,Date_issue FROM members join on_hands on members.Code_member=on_hands.Code_member" +
-                " join book on book.Code_book=on_hands.Code_book join genre on genre.Code_genre=book.Genre" +
-                " join type on type.Code_type=book.type join publishing_house on book.Code_publish=publishing_house.Code_publish" +
-                " join author_list on author_list.Code_book=book.Code_book join author on author_list.Code_author=author.Code_author " +
-                "where on_hands.Code_member = " + codeMember + " ;";
-
-            MySqlDataReader reader = NewQuery.executeReader(query, conn);
-            List<string[]> data = NewStringList.myBooks(reader);
-            conn.Close();
-
-            AddRowsToDataGridView.addRows(data, dataGridViewMyBooks);
-        }
-
-        private void showOnHandsBooks()
-        {
-            dataGridViewOnHands = AddColumnToDataGridView.ClearDataGridView(dataGridViewOnHands);
-            dataGridViewOnHands = AddColumnToDataGridView.addColumnToOnHandsBook(dataGridViewOnHands);
-
-            conn.Open();
-            string query = "SELECT on_hands.Code,book.Code_book,Title,members.Name,members.Surname,members.Adress," +
-                "members.Phone_number,Date_issue FROM members join on_hands on members.Code_member=on_hands.Code_member" +
-                " join book on book.Code_book=on_hands.Code_book join genre on genre.Code_genre=book.Genre" +
-                " join type on type.Code_type=book.type join publishing_house on book.Code_publish=publishing_house.Code_publish" +
-                " join author_list on author_list.Code_book=book.Code_book join author on author_list.Code_author=author.Code_author order by on_hands.Code;";
-
-            MySqlDataReader reader = NewQuery.executeReader(query, conn);
-            List<string[]> data = NewStringList.onHandsBooks(reader);
-            conn.Close();
-
-            AddRowsToDataGridView.addRows(data, dataGridViewOnHands);
+            tableName = ShowCatalog.showTypes(conn, dataGridViewCatalog);
         }
 
         private void dataGridViewCatalog_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -397,7 +269,7 @@ namespace New_Lib
             if (textBoxSearch.Text != "")
             {
                 string query = Query + " where Title like '%" + textBoxSearch.Text + "%' order by book.Code_book";
-                showBookCatalog(query);
+                tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, query);
             }
         }
 
@@ -427,9 +299,9 @@ namespace New_Lib
 
                             conn.Close();
                             MessageBox.Show("You took '" + title + "'. Thank you for choosing us", "INFO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            showBookCatalog(Query + " order by book.Code_book");
-                            showMyBooks();
-                            showOnHandsBooks();
+                            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
+                            ShowCatalog.showMyBooks(conn, dataGridViewMyBooks, codeMember);
+                            ShowCatalog.showOnHandsBooks(conn, dataGridViewOnHands);
                         }
                         else
                         {
@@ -458,9 +330,9 @@ namespace New_Lib
 
                     MessageBox.Show("Book '" + title + "' has been returned", "INFO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     conn.Close();
-                    showBookCatalog(Query + " order by book.Code_book");
-                    showMyBooks();
-                    showOnHandsBooks();
+                    tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
+                    ShowCatalog.showMyBooks(conn, dataGridViewMyBooks, codeMember);
+                    ShowCatalog.showOnHandsBooks(conn, dataGridViewOnHands);
                 }
             }
         }
@@ -475,27 +347,27 @@ namespace New_Lib
                 {
                     case 1:
                         AddToDataBase.genreAdd(dataGridViewCatalog, conn);
-                        showGenres();
+                        tableName = ShowCatalog.showGenres(conn, dataGridViewCatalog);
                         break;
 
                     case 2:
                         AddToDataBase.typeAdd(dataGridViewCatalog, conn);
-                        showTypes();
+                        tableName = ShowCatalog.showTypes(conn, dataGridViewCatalog);
                         break;
 
                     case 3:
                         AddToDataBase.authorAdd(dataGridViewCatalog, conn);
-                        showAuthor();
+                        tableName = ShowCatalog.showAuthor(conn, dataGridViewCatalog);
                         break;
 
                     case 4:
                         AddToDataBase.pubHouseAdd(dataGridViewCatalog, conn);
-                        showPubHouses();
+                        tableName = ShowCatalog.showPubHouses(conn, dataGridViewCatalog);
                         break;
 
                     case 5:
                         AddToDataBase.bookAdd(dataGridViewCatalog, conn);
-                        showBookCatalog(Query + " order by book.Code_book;");
+                        tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
                         break;
                 }
                 MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -514,27 +386,27 @@ namespace New_Lib
                     {
                         case "book":
                             DeleteFromDataBase.delete(tableName, "code_book", uninversalCode, conn);
-                            showBookCatalog(Query + " order by book.Code_book");
+                            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
                             break;
 
                         case "author":
                             DeleteFromDataBase.delete(tableName, "code_author", uninversalCode, conn);
-                            showAuthor();
+                            tableName = ShowCatalog.showAuthor(conn, dataGridViewCatalog);
                             break;
 
                         case "genre":
                             DeleteFromDataBase.delete(tableName, "code_genre", uninversalCode, conn);
-                            showGenres();
+                            tableName = ShowCatalog.showGenres(conn, dataGridViewCatalog);
                             break;
 
                         case "type":
                             DeleteFromDataBase.delete(tableName, "code_type", uninversalCode, conn);
-                            showTypes();
+                            tableName = ShowCatalog.showTypes(conn, dataGridViewCatalog);
                             break;
 
                         case "publishing_house":
                             DeleteFromDataBase.delete(tableName, "Code_publish", uninversalCode, conn);
-                            showPubHouses();
+                            tableName = ShowCatalog.showPubHouses(conn, dataGridViewCatalog);
                             break;
                     }
                     conn.Close();
@@ -555,27 +427,27 @@ namespace New_Lib
                     {
                         case "author":
                             UpdateDataBase.updateAuthor(dataForUpdate, conn);
-                            showAuthor();
+                            tableName = ShowCatalog.showAuthor(conn, dataGridViewCatalog);
                             break;
 
                         case "book":
                             UpdateDataBase.updateBook(dataForUpdate, conn);
-                            showBookCatalog(Query + " order by book.Code_book");
+                            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
                             break;
 
                         case "genre":
                             UpdateDataBase.updateGenre(dataForUpdate, conn);
-                            showGenres();
+                            tableName = ShowCatalog.showGenres(conn, dataGridViewCatalog);
                             break;
 
                         case "type":
                             UpdateDataBase.updateType(dataForUpdate, conn);
-                            showTypes();
+                            tableName = ShowCatalog.showTypes(conn, dataGridViewCatalog);
                             break;
 
                         case "publishing_house":
                             UpdateDataBase.updatePubHouse(dataForUpdate, conn);
-                            showPubHouses();
+                            tableName = ShowCatalog.showPubHouses(conn, dataGridViewCatalog);
                             break;
                     }
                     conn.Close();
