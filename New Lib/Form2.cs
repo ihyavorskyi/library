@@ -513,32 +513,27 @@ namespace New_Lib
                     switch (tableName)
                     {
                         case "book":
-                            delete("code_book");
-                            conn.Close();
+                            DeleteFromDataBase.delete(tableName, "code_book", uninversalCode, conn);
                             showBookCatalog(Query + " order by book.Code_book");
                             break;
 
                         case "author":
-                            delete("code_author");
-                            conn.Close();
+                            DeleteFromDataBase.delete(tableName, "code_author", uninversalCode, conn);
                             showAuthor();
                             break;
 
                         case "genre":
-                            delete("code_genre");
-                            conn.Close();
+                            DeleteFromDataBase.delete(tableName, "code_genre", uninversalCode, conn);
                             showGenres();
                             break;
 
                         case "type":
-                            delete("code_type");
-                            conn.Close();
+                            DeleteFromDataBase.delete(tableName, "code_type", uninversalCode, conn);
                             showTypes();
                             break;
 
                         case "publishing_house":
-                            delete("Code_publish");
-                            conn.Close();
+                            DeleteFromDataBase.delete(tableName, "Code_publish", uninversalCode, conn);
                             showPubHouses();
                             break;
                     }
@@ -560,31 +555,26 @@ namespace New_Lib
                     {
                         case "author":
                             UpdateDataBase.updateAuthor(dataForUpdate, conn);
-                            conn.Close();
                             showAuthor();
                             break;
 
                         case "book":
                             UpdateDataBase.updateBook(dataForUpdate, conn);
-                            conn.Close();
                             showBookCatalog(Query + " order by book.Code_book");
                             break;
 
                         case "genre":
                             UpdateDataBase.updateGenre(dataForUpdate, conn);
-                            conn.Close();
                             showGenres();
                             break;
 
                         case "type":
                             UpdateDataBase.updateType(dataForUpdate, conn);
-                            conn.Close();
                             showTypes();
                             break;
 
                         case "publishing_house":
                             UpdateDataBase.updatePubHouse(dataForUpdate, conn);
-                            conn.Close();
                             showPubHouses();
                             break;
                     }
@@ -592,12 +582,6 @@ namespace New_Lib
                     MessageBox.Show("Updated successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-        }
-
-        private void delete(string deleteFrom)
-        {
-            string query = "delete from " + tableName + " where " + deleteFrom + " = '" + uninversalCode + "'";
-            NewQuery.executeNonQuery(query, conn);
         }
     }
 }

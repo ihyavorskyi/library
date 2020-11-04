@@ -50,6 +50,7 @@
     <Compile Include="AddColumnToDataGridView.cs" />
     <Compile Include="AddRowsToDataGridView.cs" />
     <Compile Include="AddToDataBase.cs" />
+    <Compile Include="DeleteFromDataBase.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +104,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WorkWithDataBase\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
