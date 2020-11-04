@@ -1,19 +1,11 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace New_Lib
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
@@ -23,6 +15,7 @@ namespace New_Lib
             buttonSignIn.Text = "Sign In";
             buttonRegister.Text = "Register now";
         }
+
         private string GetConnection()
         {
             return "Server = 127.0.0.1; Database = library; port = 3306; User = root; password = Pro100 Igor";
@@ -55,7 +48,7 @@ namespace New_Lib
 
             if (reader.Read())
             {
-                Form2 form2 = new Form2(reader[6].ToString(),(int)reader[0]);
+                Form2 form2 = new Form2(reader[6].ToString(), (int)reader[0]);
                 form2.Text = "Library. " + reader[1].ToString() + " " + reader[2].ToString() + ". Role : " + reader[6].ToString();
                 form2.Show();
                 Hide();
