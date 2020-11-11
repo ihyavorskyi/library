@@ -4,53 +4,50 @@ using System.Windows.Forms;
 
 namespace New_Lib
 {
-    public partial class Form2 : Form
+    public partial class LibraryForm : Form
     {
         private string role { get; set; }
-        private string Query { get; set; }
-        private int codeMember { get; set; }
-        private string uninversalCode { get; set; }
-        private string codeOnHands { get; set; }
-        private string title { get; set; }
-        private MySqlConnection conn { get; set; }
-        private int idAdd { get; set; }
-        private string tableName { get; set; }
 
-        private string[] dataForUpdate = new string[10];
-
-        public Form2(string role, int id)
-        {
-            InitializeComponent();
-            this.role = role;
-            codeMember = id;
-            conn = new MySqlConnection(GetConnection());
-            uninversalCode = "0";
-            codeOnHands = "0";
-            idAdd = 0;
-            tableName = "";
-
-            Query = "SELECT book.Code_book,Title,author.Name,author.Surname,Pages," +
+        private string Query = "SELECT book.Code_book,Title,author.Name,author.Surname,Pages," +
                 "Year_publish,Name_genre,Name_type,publishing_house.Name,Count_in_library FROM book  join " +
                 "genre on genre.Code_genre=book.Genre join type on type.Code_type=book.type " +
                 "join publishing_house on book.Code_publish=publishing_house.Code_publish join " +
                 "author_list on author_list.Code_book=book.Code_book join author on " +
                 "author_list.Code_author=author.Code_author ";
 
+        private int codeMember { get; set; }
+        private string uninversalCode { get; set; }
+        private string codeOnHands { get; set; }
+        private string title { get; set; }
+        private int idAdd { get; set; }
+        private string tableName { get; set; }
+
+        private string[] dataForUpdate = new string[10];
+
+        public LibraryForm(string role, int id)
+        {
+            InitializeComponent();
+            this.role = role;
+            codeMember = id;
+            uninversalCode = "0";
+            codeOnHands = "0";
+            idAdd = 0;
+            tableName = "";
             isAdmin();
-            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
-            ShowCatalog.showMyBooks(conn, dataGridViewMyBooks, codeMember);
-            ShowCatalog.showOnHandsBooks(conn, dataGridViewOnHands);
+            tableName = ShowCatalog.ShowBookCatalog(dataGridViewCatalog, Query + "order by book.Code_book");
+            ShowCatalog.ShowMyBooks(dataGridViewMyBooks, codeMember);
+            ShowCatalog.ShowOnHandsBooks(dataGridViewOnHands);
         }
 
-        private string GetConnection()
+        public static string GetConnection()
         {
             return "Server = 127.0.0.1; Database = library; port = 3306; User = root; password = Pro100 Igor";
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();
-            form1.Show();
+            SingInForm form = new SingInForm();
+            form.Show();
             Close();
         }
 
@@ -59,40 +56,40 @@ namespace New_Lib
             isAdd(false);
             isDeleteUpdate();
             isTake(1);
-            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
+            tableName = ShowCatalog.ShowBookCatalog(dataGridViewCatalog, Query + "order by book.Code_book");
             isUser();
         }
 
         private void authorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isCheck();
-            tableName = ShowCatalog.showAuthor(conn, dataGridViewCatalog);
+            tableName = ShowCatalog.ShowAuthor(dataGridViewCatalog);
             isUser();
         }
 
         private void publishingHousesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isCheck();
-            tableName = ShowCatalog.showPubHouses(conn, dataGridViewCatalog);
+            tableName = ShowCatalog.ShowPubHouses(dataGridViewCatalog);
             isUser();
         }
 
         private void membersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isCheck();
-            tableName = ShowCatalog.showMembers(conn, dataGridViewCatalog);
+            tableName = ShowCatalog.ShowMembers(dataGridViewCatalog);
         }
 
         private void genresToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isCheck();
-            tableName = ShowCatalog.showGenres(conn, dataGridViewCatalog);
+            tableName = ShowCatalog.ShowGenres(dataGridViewCatalog);
         }
 
         private void typesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isCheck();
-            tableName = ShowCatalog.showTypes(conn, dataGridViewCatalog);
+            tableName = ShowCatalog.ShowTypes(dataGridViewCatalog);
         }
 
         private void dataGridViewCatalog_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -102,8 +99,8 @@ namespace New_Lib
             title = dataGridViewCatalog.Rows[selRowNum].Cells[1].Value.ToString();
             textBoxSelectedID.Text = "ID: " + uninversalCode;
 
-            dataForUpdate[0] = dataGridViewCatalog.Rows[selRowNum].Cells[0].Value.ToString();
-            dataForUpdate[1] = dataGridViewCatalog.Rows[selRowNum].Cells[1].Value.ToString();
+            dataForUpdate[0] = uninversalCode;
+            dataForUpdate[1] = title;
             if (tableName == "author" || tableName == "publishing_house" || tableName == "book")
             {
                 for (int i = 2; i <= 4; i++)
@@ -170,9 +167,9 @@ namespace New_Lib
             }
         }
 
-        private void isAdd(bool check)
+        private void isAdd(bool isAdmin)
         {
-            if (check)
+            if (isAdmin)
             {
                 buttonUpdateOrAdd.Visible = true;
                 buttonUpdate.Visible = false;
@@ -270,102 +267,35 @@ namespace New_Lib
             if (textBoxSearch.Text != "")
             {
                 string query = Query + " where Title like '%" + textBoxSearch.Text + "%' order by book.Code_book";
-                tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, query);
+                tableName = ShowCatalog.ShowBookCatalog(dataGridViewCatalog, query);
             }
         }
 
         private void buttonTakeIt_Click(object sender, EventArgs e)
         {
-            if (uninversalCode != "0")
-            {
-                DialogResult dialogResult = MessageBox.Show("Are you sure?", "INFO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    conn.Open();
-
-                    string query = "select Count_in_library from book where Code_book = " + uninversalCode;
-                    MySqlDataReader reader = NewQuery.executeReader(query, conn);
-                    if (reader.Read())
-                    {
-                        if ((int)reader[0] != 0)
-                        {
-                            int book_count = (int)reader[0];
-                            reader.Close();
-
-                            query = "insert into on_hands values (null," + uninversalCode + "," + codeMember + ",'" + DateTime.Today + "')";
-                            NewQuery.executeNonQuery(query, conn);
-
-                            query = "update book set Count_in_library = " + (book_count - 1) + " where Code_book = " + uninversalCode;
-                            NewQuery.executeNonQuery(query, conn);
-
-                            conn.Close();
-                            MessageBox.Show("You took '" + title + "'. Thank you for choosing us", "INFO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
-                            ShowCatalog.showMyBooks(conn, dataGridViewMyBooks, codeMember);
-                            ShowCatalog.showOnHandsBooks(conn, dataGridViewOnHands);
-                        }
-                        else
-                        {
-                            MessageBox.Show("This book is not available. Please accept our apologies.", "SORRY", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    conn.Close();
-                }
-            }
+            DataGridView[] dataGridViews = new DataGridView[] { dataGridViewCatalog, dataGridViewMyBooks, dataGridViewOnHands };
+            TakeBook.takeIt(uninversalCode, codeMember, title, Query, dataGridViews);
         }
 
         private void buttonReturned_Click(object sender, EventArgs e)
         {
             DataGridView[] dataGridViews = new DataGridView[] { dataGridViewCatalog, dataGridViewMyBooks, dataGridViewOnHands };
-            tableName = ReturnBook.returned(codeOnHands, conn, uninversalCode, title, tableName,
-                Query, dataGridViews, codeMember);
-        }
-
-        private void buttonUpdateOrAdd_Click(object sender, EventArgs e)
-        {
-            DialogResult dialogResult = MessageBox.Show("Are you sure?", "INFO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.Yes)
-            {
-                conn.Open();
-                switch (idAdd)
-                {
-                    case 1:
-                        AddToDataBase.genreAdd(dataGridViewCatalog, conn);
-                        tableName = ShowCatalog.showGenres(conn, dataGridViewCatalog);
-                        break;
-
-                    case 2:
-                        AddToDataBase.typeAdd(dataGridViewCatalog, conn);
-                        tableName = ShowCatalog.showTypes(conn, dataGridViewCatalog);
-                        break;
-
-                    case 3:
-                        AddToDataBase.authorAdd(dataGridViewCatalog, conn);
-                        tableName = ShowCatalog.showAuthor(conn, dataGridViewCatalog);
-                        break;
-
-                    case 4:
-                        AddToDataBase.pubHouseAdd(dataGridViewCatalog, conn);
-                        tableName = ShowCatalog.showPubHouses(conn, dataGridViewCatalog);
-                        break;
-
-                    case 5:
-                        AddToDataBase.bookAdd(dataGridViewCatalog, conn);
-                        tableName = ShowCatalog.showBookCatalog(conn, dataGridViewCatalog, Query + "order by book.Code_book");
-                        break;
-                }
-                MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            ReturnBook.returned(codeOnHands, uninversalCode, title, Query, dataGridViews, codeMember);
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            tableName = DeleteFromDataBase.delete(uninversalCode, conn, tableName, dataGridViewCatalog, Query);
+            DeleteFromDataBase.delete(uninversalCode, tableName, dataGridViewCatalog, Query);
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            tableName = UpdateDataBase.update(conn, uninversalCode, tableName, dataForUpdate, dataGridViewCatalog, Query);
+            UpdateDataBase.update(uninversalCode, tableName, dataForUpdate, dataGridViewCatalog, Query);
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            AddToDataBase.add(idAdd, dataGridViewCatalog, tableName, Query);
         }
     }
 }

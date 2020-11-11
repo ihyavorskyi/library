@@ -48,11 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReturnBook\ReturnBook.cs" />
+    <Compile Include="TakeBook\TakeBook.cs" />
     <Compile Include="WorkWithDataGrid\ShowCatalog.cs" />
     <Compile Include="WorkWithDataGrid\AddColumnToDataGridView.cs" />
     <Compile Include="WorkWithDataGrid\AddRowsToDataGridView.cs" />
-    <Compile Include="WorkWithDataBase\AddToDataBase.cs" />
-    <Compile Include="WorkWithDataBase\DeleteFromDataBase.cs" />
+    <Compile Include="FunctionalDB\AddToDataBase.cs" />
+    <Compile Include="FunctionalDB\DeleteFromDataBase.cs" />
     <Compile Include="Forms\SingInForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,11 +72,11 @@
     <Compile Include="Forms\RegistrationForm.Designer.cs">
       <DependentUpon>RegistrationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="WorkWithDataBase\NewQuery.cs" />
-    <Compile Include="WorkWithDataBase\NewStringList.cs" />
+    <Compile Include="FunctionalDB\NewQuery.cs" />
+    <Compile Include="FunctionalDB\ResponseDB.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorkWithDataBase\UpdateDataBase.cs" />
+    <Compile Include="FunctionalDB\UpdateDataBase.cs" />
     <EmbeddedResource Include="Forms\SingInForm.resx">
       <DependentUpon>SingInForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,54 +1,57 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace New_Lib
 {
     internal class ShowCatalog
     {
-        public static string showAuthor(MySqlConnection conn, DataGridView dataGridViewCatalog)
+        public static MySqlConnection conn = new MySqlConnection(LibraryForm.GetConnection());
+
+        public static string ShowAuthor(DataGridView dataGridViewCatalog)
         {
             dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
             dataGridViewCatalog = AddColumnToDataGridView.addColumnToAuthohrs(dataGridViewCatalog);
 
             conn.Open();
             MySqlDataReader reader = NewQuery.executeReader("select * from author", conn);
-            List<string[]> data = NewStringList.authors(reader);
+            List<string[]> data = ResponseDB.authors(reader);
             conn.Close();
 
             AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
             return "author";
         }
 
-        public static string showPubHouses(MySqlConnection conn, DataGridView dataGridViewCatalog)
+        public static string ShowPubHouses(DataGridView dataGridViewCatalog)
         {
             dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
             dataGridViewCatalog = AddColumnToDataGridView.addColumnToPubHouses(dataGridViewCatalog);
 
             conn.Open();
             MySqlDataReader reader = NewQuery.executeReader("select * from `publishing_house`", conn);
-            List<string[]> data = NewStringList.pubHouse(reader);
+            List<string[]> data = ResponseDB.pubHouse(reader);
             conn.Close();
 
             AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
             return "publishing_house";
         }
 
-        public static string showMembers(MySqlConnection conn, DataGridView dataGridViewCatalog)
+        public static string ShowMembers(DataGridView dataGridViewCatalog)
         {
             dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
             dataGridViewCatalog = AddColumnToDataGridView.addColumnToMembers(dataGridViewCatalog);
 
             conn.Open();
             MySqlDataReader reader = NewQuery.executeReader("select * from members", conn);
-            List<string[]> data = NewStringList.members(reader);
+            List<string[]> data = ResponseDB.members(reader);
             conn.Close();
 
             AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
             return "members";
         }
 
-        public static string showGenres(MySqlConnection conn, DataGridView dataGridViewCatalog)
+        public static string ShowGenres(DataGridView dataGridViewCatalog)
         {
             dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
 
@@ -58,14 +61,14 @@ namespace New_Lib
 
             conn.Open();
             MySqlDataReader reader = NewQuery.executeReader("select * from genre", conn);
-            List<string[]> data = NewStringList.genres(reader);
+            List<string[]> data = ResponseDB.genres(reader);
             conn.Close();
 
             AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
             return "genre";
         }
 
-        public static string showTypes(MySqlConnection conn, DataGridView dataGridViewCatalog)
+        public static string ShowTypes(DataGridView dataGridViewCatalog)
         {
             dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
             dataGridViewCatalog.Columns.Add("Code_type", "ID");
@@ -74,28 +77,28 @@ namespace New_Lib
 
             conn.Open();
             MySqlDataReader reader = NewQuery.executeReader("select * from type", conn);
-            List<string[]> data = NewStringList.types(reader);
+            List<string[]> data = ResponseDB.types(reader);
             conn.Close();
 
             AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
             return "type";
         }
 
-        public static string showBookCatalog(MySqlConnection conn, DataGridView dataGridViewCatalog, string query)
+        public static string ShowBookCatalog(DataGridView dataGridViewCatalog, string query)
         {
             dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
             dataGridViewCatalog = AddColumnToDataGridView.addColumnToBookCatalog(dataGridViewCatalog);
 
             conn.Open();
             MySqlDataReader reader = NewQuery.executeReader(query, conn);
-            List<string[]> data = NewStringList.books(reader);
+            List<string[]> data = ResponseDB.books(reader);
             conn.Close();
 
             AddRowsToDataGridView.addRows(data, dataGridViewCatalog);
             return "book";
         }
 
-        public static void showMyBooks(MySqlConnection conn, DataGridView dataGridViewMyBooks, int codeMember)
+        public static void ShowMyBooks(DataGridView dataGridViewMyBooks, int codeMember)
         {
             dataGridViewMyBooks = AddColumnToDataGridView.ClearDataGridView(dataGridViewMyBooks);
             dataGridViewMyBooks = AddColumnToDataGridView.addColumnToMyBook(dataGridViewMyBooks);
@@ -109,13 +112,13 @@ namespace New_Lib
                 "where on_hands.Code_member = " + codeMember + " ;";
 
             MySqlDataReader reader = NewQuery.executeReader(query, conn);
-            List<string[]> data = NewStringList.myBooks(reader);
+            List<string[]> data = ResponseDB.myBooks(reader);
             conn.Close();
 
             AddRowsToDataGridView.addRows(data, dataGridViewMyBooks);
         }
 
-        public static void showOnHandsBooks(MySqlConnection conn, DataGridView dataGridViewOnHands)
+        public static void ShowOnHandsBooks(DataGridView dataGridViewOnHands)
         {
             dataGridViewOnHands = AddColumnToDataGridView.ClearDataGridView(dataGridViewOnHands);
             dataGridViewOnHands = AddColumnToDataGridView.addColumnToOnHandsBook(dataGridViewOnHands);
@@ -128,7 +131,7 @@ namespace New_Lib
                 " join author_list on author_list.Code_book=book.Code_book join author on author_list.Code_author=author.Code_author order by on_hands.Code;";
 
             MySqlDataReader reader = NewQuery.executeReader(query, conn);
-            List<string[]> data = NewStringList.onHandsBooks(reader);
+            List<string[]> data = ResponseDB.onHandsBooks(reader);
             conn.Close();
 
             AddRowsToDataGridView.addRows(data, dataGridViewOnHands);

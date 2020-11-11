@@ -1,6 +1,6 @@
 ﻿namespace New_Lib
 {
-    partial class Form3
+    partial class RegistrationForm
     {
         /// <summary>
         /// Required designer variable.
