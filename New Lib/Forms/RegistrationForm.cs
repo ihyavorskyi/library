@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace New_Lib
 {
-    public partial class Form3 : Form
+    public partial class RegistrationForm : Form
     {
-        public Form3()
+        public RegistrationForm()
         {
             InitializeComponent();
             labelName.Text = "Name : ";
@@ -59,8 +59,8 @@ namespace New_Lib
 
         private void openSignInForm()
         {
-            Form1 form1 = new Form1();
-            form1.Show();
+            SingInForm form = new SingInForm();
+            form.Show();
             Close();
         }
     }

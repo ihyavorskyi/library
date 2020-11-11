@@ -5,8 +5,9 @@ namespace New_Lib
 {
     internal class ReturnBook
     {
-        public static string returned(string codeOnHands, MySqlConnection conn, string uninversalCode, string title,
-            string tableName, string Query, DataGridView[] dataGridViews, int codeMember)
+        public static MySqlConnection conn = new MySqlConnection(LibraryForm.GetConnection());
+
+        public static void returned(string codeOnHands, string uninversalCode, string title, string Query, DataGridView[] dataGridViews, int codeMember)
         {
             if (codeOnHands != "0")
             {
@@ -23,12 +24,11 @@ namespace New_Lib
 
                     MessageBox.Show("Book '" + title + "' has been returned", "INFO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     conn.Close();
-                    tableName = ShowCatalog.showBookCatalog(conn, dataGridViews[0], Query + "order by book.Code_book");
-                    ShowCatalog.showMyBooks(conn, dataGridViews[1], codeMember);
-                    ShowCatalog.showOnHandsBooks(conn, dataGridViews[2]);
+                    ShowCatalog.ShowBookCatalog(dataGridViews[0], Query + "order by book.Code_book");
+                    ShowCatalog.ShowMyBooks(dataGridViews[1], codeMember);
+                    ShowCatalog.ShowOnHandsBooks(dataGridViews[2]);
                 }
             }
-            return tableName;
         }
     }
 }

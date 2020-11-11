@@ -5,7 +5,47 @@ namespace New_Lib
 {
     public class AddToDataBase
     {
-        public static void genreAdd(DataGridView dataGridView, MySqlConnection conn)
+        public static MySqlConnection conn = new MySqlConnection(LibraryForm.GetConnection());
+
+        public static string add(int idAdd, DataGridView dataGridViewCatalog, string tableName, string Query)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure?", "INFO", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
+            {
+                conn.Open();
+                switch (idAdd)
+                {
+                    case 1:
+                        genreAdd(dataGridViewCatalog);
+                        tableName = ShowCatalog.ShowGenres(dataGridViewCatalog);
+                        break;
+
+                    case 2:
+                        typeAdd(dataGridViewCatalog);
+                        tableName = ShowCatalog.ShowTypes(dataGridViewCatalog);
+                        break;
+
+                    case 3:
+                        authorAdd(dataGridViewCatalog);
+                        tableName = ShowCatalog.ShowAuthor(dataGridViewCatalog);
+                        break;
+
+                    case 4:
+                        pubHouseAdd(dataGridViewCatalog);
+                        tableName = ShowCatalog.ShowPubHouses(dataGridViewCatalog);
+                        break;
+
+                    case 5:
+                        bookAdd(dataGridViewCatalog);
+                        tableName = ShowCatalog.ShowBookCatalog(dataGridViewCatalog, Query + "order by book.Code_book");
+                        break;
+                }
+                MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            return tableName;
+        }
+
+        private static void genreAdd(DataGridView dataGridView)
         {
             for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
             {
@@ -15,7 +55,7 @@ namespace New_Lib
             conn.Close();
         }
 
-        public static void typeAdd(DataGridView dataGridView, MySqlConnection conn)
+        private static void typeAdd(DataGridView dataGridView)
         {
             for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
             {
@@ -25,7 +65,7 @@ namespace New_Lib
             conn.Close();
         }
 
-        public static void authorAdd(DataGridView dataGridView, MySqlConnection conn)
+        private static void authorAdd(DataGridView dataGridView)
         {
             for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
             {
@@ -39,7 +79,7 @@ namespace New_Lib
             conn.Close();
         }
 
-        public static void pubHouseAdd(DataGridView dataGridView, MySqlConnection conn)
+        private static void pubHouseAdd(DataGridView dataGridView)
         {
             for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
             {
@@ -53,7 +93,7 @@ namespace New_Lib
             conn.Close();
         }
 
-        public static void bookAdd(DataGridView dataGridView, MySqlConnection conn)
+        private static void bookAdd(DataGridView dataGridView)
         {
             for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
             {

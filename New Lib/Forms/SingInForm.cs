@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace New_Lib
 {
-    public partial class Form1 : Form
+    public partial class SingInForm : Form
     {
-        public Form1()
+        public SingInForm()
         {
             InitializeComponent();
             labelSingIn.Text = "Sign in account";
@@ -48,9 +48,9 @@ namespace New_Lib
 
             if (reader.Read())
             {
-                Form2 form2 = new Form2(reader[6].ToString(), (int)reader[0]);
-                form2.Text = "Library. " + reader[1].ToString() + " " + reader[2].ToString() + ". Role : " + reader[6].ToString();
-                form2.Show();
+                LibraryForm form = new LibraryForm(reader[6].ToString(), (int)reader[0]);
+                form.Text = "Library. " + reader[1].ToString() + " " + reader[2].ToString() + ". Role : " + reader[6].ToString();
+                form.Show();
                 Hide();
             }
             else
@@ -63,8 +63,8 @@ namespace New_Lib
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3();
-            form3.Show();
+            RegistrationForm form = new RegistrationForm();
+            form.Show();
             Hide();
         }
     }

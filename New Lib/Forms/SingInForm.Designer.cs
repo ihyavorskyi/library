@@ -1,6 +1,6 @@
 ﻿namespace New_Lib
 {
-    partial class Form1
+    partial class SingInForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.

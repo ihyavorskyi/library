@@ -1,6 +1,6 @@
 ﻿namespace New_Lib
 {
-    partial class Form2
+    partial class LibraryForm
     {
         /// <summary>
         /// Required designer variable.
@@ -128,7 +128,7 @@
             this.buttonUpdateOrAdd.TabIndex = 9;
             this.buttonUpdateOrAdd.Text = "Add";
             this.buttonUpdateOrAdd.UseVisualStyleBackColor = true;
-            this.buttonUpdateOrAdd.Click += new System.EventHandler(this.buttonUpdateOrAdd_Click);
+            this.buttonUpdateOrAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonTakeIt
             // 
@@ -372,7 +372,7 @@
             this.dataGridViewOnHands.TabIndex = 3;
             this.dataGridViewOnHands.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewOnHands_CellContentClick);
             // 
-            // Form2
+            // LibraryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -380,7 +380,7 @@
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "Form2";
+            this.Name = "LibraryForm";
             this.Text = "Form2";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
