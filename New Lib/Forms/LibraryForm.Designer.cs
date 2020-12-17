@@ -59,6 +59,10 @@
             this.buttonReturned = new System.Windows.Forms.Button();
             this.textBoxOnHands = new System.Windows.Forms.TextBox();
             this.dataGridViewOnHands = new System.Windows.Forms.DataGridView();
+            this.patentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.articlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.articleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCatalog)).BeginInit();
@@ -128,6 +132,7 @@
             this.buttonUpdateOrAdd.TabIndex = 9;
             this.buttonUpdateOrAdd.Text = "Add";
             this.buttonUpdateOrAdd.UseVisualStyleBackColor = true;
+            this.buttonUpdateOrAdd.Visible = false;
             this.buttonUpdateOrAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonTakeIt
@@ -185,6 +190,8 @@
             this.menuStrip2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.booksToolStripMenuItem,
+            this.patentsToolStripMenuItem,
+            this.articlesToolStripMenuItem,
             this.authorsToolStripMenuItem,
             this.publishingHousesToolStripMenuItem,
             this.membersToolStripMenuItem,
@@ -246,7 +253,9 @@
             this.typeToolStripMenuItem,
             this.authorToolStripMenuItem,
             this.publishingHouseToolStripMenuItem,
-            this.bookToolStripMenuItem});
+            this.bookToolStripMenuItem,
+            this.articleToolStripMenuItem,
+            this.panentToolStripMenuItem});
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
             this.addToolStripMenuItem.Size = new System.Drawing.Size(50, 25);
             this.addToolStripMenuItem.Text = "Add";
@@ -372,6 +381,34 @@
             this.dataGridViewOnHands.TabIndex = 3;
             this.dataGridViewOnHands.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewOnHands_CellContentClick);
             // 
+            // patentsToolStripMenuItem
+            // 
+            this.patentsToolStripMenuItem.Name = "patentsToolStripMenuItem";
+            this.patentsToolStripMenuItem.Size = new System.Drawing.Size(72, 25);
+            this.patentsToolStripMenuItem.Text = "Patents";
+            this.patentsToolStripMenuItem.Click += new System.EventHandler(this.patentsToolStripMenuItem_Click);
+            // 
+            // articlesToolStripMenuItem
+            // 
+            this.articlesToolStripMenuItem.Name = "articlesToolStripMenuItem";
+            this.articlesToolStripMenuItem.Size = new System.Drawing.Size(73, 25);
+            this.articlesToolStripMenuItem.Text = "Articles";
+            this.articlesToolStripMenuItem.Click += new System.EventHandler(this.articlesToolStripMenuItem_Click);
+            // 
+            // articleToolStripMenuItem
+            // 
+            this.articleToolStripMenuItem.Name = "articleToolStripMenuItem";
+            this.articleToolStripMenuItem.Size = new System.Drawing.Size(199, 26);
+            this.articleToolStripMenuItem.Text = "Article";
+            this.articleToolStripMenuItem.Click += new System.EventHandler(this.articleToolStripMenuItem_Click);
+            // 
+            // panentToolStripMenuItem
+            // 
+            this.panentToolStripMenuItem.Name = "panentToolStripMenuItem";
+            this.panentToolStripMenuItem.Size = new System.Drawing.Size(199, 26);
+            this.panentToolStripMenuItem.Text = "Patent";
+            this.panentToolStripMenuItem.Click += new System.EventHandler(this.panentToolStripMenuItem_Click);
+            // 
             // LibraryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -382,6 +419,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "LibraryForm";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.LibraryForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -433,5 +471,9 @@
         private System.Windows.Forms.Button buttonUpdateOrAdd;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.ToolStripMenuItem patentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem articlesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem articleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem panentToolStripMenuItem;
     }
 }

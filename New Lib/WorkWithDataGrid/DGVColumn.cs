@@ -2,9 +2,9 @@
 
 namespace New_Lib
 {
-    public class AddColumnToDataGridView
+    public class DGVColumn
     {
-        public static DataGridView ClearDataGridView(DataGridView dataGridView)
+        public static DataGridView Clear(DataGridView dataGridView)
         {
             dataGridView.Columns.Clear();
             dataGridView.Rows.Clear();
@@ -82,6 +82,29 @@ namespace New_Lib
             dataGridView.Columns.Add("Surname_member", "Surname");
             dataGridView.Columns.Add("Adress_member", "Adress");
             dataGridView.Columns.Add("Phone_number_member", "Phone number");
+            return dataGridView;
+        }
+
+        public static DataGridView addColumnToPatents(DataGridView dataGridView)
+        {
+            dataGridView.Columns.Add("Code_patent", "ID");
+            dataGridView.Columns[0].ReadOnly = true;
+            dataGridView.Columns.Add("Code_book", "Book ID");
+            dataGridView.Columns.Add("Number", "Number");
+            dataGridView.Columns.Add("Country", "Country");
+            dataGridView.Columns.Add("Date_of_application", "Date_of_application");
+            dataGridView.Columns.Add("Date_of_publication", "Date_of_publication");
+            return dataGridView;
+        }
+
+        public static DataGridView addColumnToArticles(DataGridView dataGridView)
+        {
+            dataGridView.Columns.Add("Code_article", "ID");
+            dataGridView.Columns[0].ReadOnly = true;
+            dataGridView.Columns.Add("Code_book", "Book ID");
+            dataGridView.Columns.Add("Title", "Title");
+            dataGridView.Columns.Add("Magazine", "Magazine");
+            dataGridView.Columns.Add("Date_of_publication", "Date_of_publication");
             return dataGridView;
         }
     }

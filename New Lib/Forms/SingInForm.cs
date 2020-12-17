@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 
 namespace New_Lib
@@ -37,6 +39,12 @@ namespace New_Lib
         {
             string connString = GetConnection();
 
+            byte[] tmpHash;
+
+            byte[] tmpSource = ASCIIEncoding.ASCII.GetBytes(password);
+            tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
+            password = ByteArrayToString(tmpHash);
+
             MySqlConnection conn = new MySqlConnection(connString);
             conn.Open();
 
@@ -66,6 +74,21 @@ namespace New_Lib
             RegistrationForm form = new RegistrationForm();
             form.Show();
             Hide();
+        }
+
+        private static string ByteArrayToString(byte[] arrInput)
+        {
+            int i;
+            StringBuilder sOutput = new StringBuilder(arrInput.Length);
+            for (i = 0; i < arrInput.Length - 1; i++)
+            {
+                sOutput.Append(arrInput[i].ToString("X2"));
+            }
+            return sOutput.ToString();
+        }
+
+        private void SingInForm_Load(object sender, EventArgs e)
+        {
         }
     }
 }

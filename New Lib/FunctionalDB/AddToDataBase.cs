@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Windows.Forms;
 
 namespace New_Lib
@@ -16,22 +17,22 @@ namespace New_Lib
                 switch (idAdd)
                 {
                     case 1:
-                        genreAdd(dataGridViewCatalog);
+                        postAdd(dataGridViewCatalog, "genre");
                         tableName = ShowCatalog.ShowGenres(dataGridViewCatalog);
                         break;
 
                     case 2:
-                        typeAdd(dataGridViewCatalog);
+                        postAdd(dataGridViewCatalog, "type");
                         tableName = ShowCatalog.ShowTypes(dataGridViewCatalog);
                         break;
 
                     case 3:
-                        authorAdd(dataGridViewCatalog);
+                        postAdd(dataGridViewCatalog, "author");
                         tableName = ShowCatalog.ShowAuthor(dataGridViewCatalog);
                         break;
 
                     case 4:
-                        pubHouseAdd(dataGridViewCatalog);
+                        postAdd(dataGridViewCatalog, "publishing_house");
                         tableName = ShowCatalog.ShowPubHouses(dataGridViewCatalog);
                         break;
 
@@ -39,56 +40,44 @@ namespace New_Lib
                         bookAdd(dataGridViewCatalog);
                         tableName = ShowCatalog.ShowBookCatalog(dataGridViewCatalog, Query + "order by book.Code_book");
                         break;
+
+                    case 6:
+                        postAdd(dataGridViewCatalog, "patent");
+                        tableName = ShowCatalog.ShowPatents(dataGridViewCatalog);
+                        break;
+
+                    case 7:
+                        postAdd(dataGridViewCatalog, "articles");
+                        tableName = ShowCatalog.ShowArticles(dataGridViewCatalog);
+                        break;
                 }
-                MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             return tableName;
         }
 
-        private static void genreAdd(DataGridView dataGridView)
+        private static void postAdd(DataGridView dataGridView, string tableName)
         {
             for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
             {
-                string query = "insert into genre values (null,'" + dataGridView.Rows[i].Cells[1].Value.ToString() + "');";
-                NewQuery.executeNonQuery(query, conn);
-            }
-            conn.Close();
-        }
-
-        private static void typeAdd(DataGridView dataGridView)
-        {
-            for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
-            {
-                string query = "insert into type values (null,'" + dataGridView.Rows[i].Cells[1].Value.ToString() + "');";
-                NewQuery.executeNonQuery(query, conn);
-            }
-            conn.Close();
-        }
-
-        private static void authorAdd(DataGridView dataGridView)
-        {
-            for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
-            {
-                string name = dataGridView.Rows[i].Cells[1].Value.ToString();
-                string surname = dataGridView.Rows[i].Cells[2].Value.ToString();
-                string birthday = dataGridView.Rows[i].Cells[3].Value.ToString();
-                string homeland = dataGridView.Rows[i].Cells[4].Value.ToString();
-                string query = "insert into author values (null,'" + name + "','" + surname + "','" + birthday + "','" + homeland + "');";
-                NewQuery.executeNonQuery(query, conn);
-            }
-            conn.Close();
-        }
-
-        private static void pubHouseAdd(DataGridView dataGridView)
-        {
-            for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
-            {
-                string name = dataGridView.Rows[i].Cells[1].Value.ToString();
-                string adress = dataGridView.Rows[i].Cells[2].Value.ToString();
-                string city = dataGridView.Rows[i].Cells[3].Value.ToString();
-                string mail = dataGridView.Rows[i].Cells[4].Value.ToString();
-                string query = "insert into publishing_house values (null,'" + name + "','" + adress + "','" + city + "','" + mail + "');";
-                NewQuery.executeNonQuery(query, conn);
+                string query = "insert into " + tableName + " values (null,'";
+                for (int j = 1; j < dataGridView.Rows[i].Cells.Count; j++)
+                {
+                    query += dataGridView.Rows[i].Cells[j].Value.ToString();
+                    if (j != dataGridView.Rows[i].Cells.Count - 1)
+                    {
+                        query += "','";
+                    }
+                }
+                query += "');";
+                try
+                {
+                    NewQuery.executeNonQuery(query, conn);
+                    MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Eror! " + e.Message, "INFO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             conn.Close();
         }
@@ -123,6 +112,7 @@ namespace New_Lib
                 query = "insert into author_list values (null,'" + author + "','" + code_book + "');";
                 NewQuery.executeNonQuery(query, conn);
             }
+            MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             conn.Close();
         }
     }
