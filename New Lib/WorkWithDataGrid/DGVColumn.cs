@@ -2,9 +2,9 @@
 
 namespace New_Lib
 {
-    public class AddColumnToDataGridView
+    public class DGVColumn
     {
-        public static DataGridView ClearDataGridView(DataGridView dataGridView)
+        public static DataGridView Clear(DataGridView dataGridView)
         {
             dataGridView.Columns.Clear();
             dataGridView.Rows.Clear();

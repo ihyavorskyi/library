@@ -41,6 +41,16 @@ namespace New_Lib
                             delete(tableName, "Code_publish", code);
                             ShowCatalog.ShowPubHouses(dataGridViewCatalog);
                             break;
+
+                        case "patent":
+                            delete(tableName, "Code_patent", code);
+                            ShowCatalog.ShowPatents(dataGridViewCatalog);
+                            break;
+
+                        case "articles":
+                            delete(tableName, "Code_article", code);
+                            ShowCatalog.ShowArticles(dataGridViewCatalog);
+                            break;
                     }
                     conn.Close();
                     MessageBox.Show("Deleted successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);

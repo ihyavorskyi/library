@@ -39,10 +39,49 @@ namespace New_Lib
                         bookAdd(dataGridViewCatalog);
                         tableName = ShowCatalog.ShowBookCatalog(dataGridViewCatalog, Query + "order by book.Code_book");
                         break;
+
+                    case 6:
+                        patentAdd(dataGridViewCatalog);
+                        tableName = ShowCatalog.ShowPatents(dataGridViewCatalog);
+                        break;
+
+                    case 7:
+                        articleAdd(dataGridViewCatalog);
+                        tableName = ShowCatalog.ShowArticles(dataGridViewCatalog);
+                        break;
                 }
                 MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             return tableName;
+        }
+
+        private static void articleAdd(DataGridView dataGridView)
+        {
+            for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
+            {
+                string name = dataGridView.Rows[i].Cells[1].Value.ToString();
+                string title = dataGridView.Rows[i].Cells[2].Value.ToString();
+                string magazine = dataGridView.Rows[i].Cells[3].Value.ToString();
+                string dateOfPublication = dataGridView.Rows[i].Cells[4].Value.ToString();
+                string query = "insert into articles values (null,'" + name + "','" + title + "','" + magazine + "','" + dateOfPublication + "');";
+                NewQuery.executeNonQuery(query, conn);
+            }
+            conn.Close();
+        }
+
+        private static void patentAdd(DataGridView dataGridView)
+        {
+            for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
+            {
+                string book = dataGridView.Rows[i].Cells[1].Value.ToString();
+                string number = dataGridView.Rows[i].Cells[2].Value.ToString();
+                string country = dataGridView.Rows[i].Cells[3].Value.ToString();
+                string dateOfApplication = dataGridView.Rows[i].Cells[4].Value.ToString();
+                string dateOfPublication = dataGridView.Rows[i].Cells[4].Value.ToString();
+                string query = "insert into patent values (null,'" + book + "','" + number + "','" + country + "','" + dateOfApplication + "','" + dateOfPublication + "');";
+                NewQuery.executeNonQuery(query, conn);
+            }
+            conn.Close();
         }
 
         private static void genreAdd(DataGridView dataGridView)

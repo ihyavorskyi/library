@@ -50,7 +50,7 @@
     <Compile Include="ReturnBook\ReturnBook.cs" />
     <Compile Include="TakeBook\TakeBook.cs" />
     <Compile Include="WorkWithDataGrid\ShowCatalog.cs" />
-    <Compile Include="WorkWithDataGrid\AddColumnToDataGridView.cs" />
+    <Compile Include="WorkWithDataGrid\DGVColumn.cs" />
     <Compile Include="WorkWithDataGrid\AddRowsToDataGridView.cs" />
     <Compile Include="FunctionalDB\AddToDataBase.cs" />
     <Compile Include="FunctionalDB\DeleteFromDataBase.cs" />

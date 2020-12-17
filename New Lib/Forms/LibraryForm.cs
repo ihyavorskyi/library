@@ -217,7 +217,7 @@ namespace New_Lib
         {
             isAdd(true);
             isTake(0);
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
+            dataGridViewCatalog = DGVColumn.Clear(dataGridViewCatalog);
             dataGridViewCatalog.Columns.Add("Code_genre", "ID");
             dataGridViewCatalog.Columns[0].ReadOnly = true;
             dataGridViewCatalog.Columns.Add("Name_genre", "Genre name");
@@ -228,7 +228,7 @@ namespace New_Lib
         {
             isAdd(true);
             isTake(0);
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
+            dataGridViewCatalog = DGVColumn.Clear(dataGridViewCatalog);
             dataGridViewCatalog.Columns.Add("Code_type", "ID");
             dataGridViewCatalog.Columns[0].ReadOnly = true;
             dataGridViewCatalog.Columns.Add("Name_type", "Type name");
@@ -239,8 +239,7 @@ namespace New_Lib
         {
             isAdd(true);
             isTake(0);
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
-            dataGridViewCatalog = AddColumnToDataGridView.addColumnToAuthohrs(dataGridViewCatalog);
+            dataGridViewCatalog = DGVColumn.addColumnToAuthohrs(DGVColumn.Clear(dataGridViewCatalog));
             idAdd = 3;
         }
 
@@ -248,8 +247,7 @@ namespace New_Lib
         {
             isAdd(true);
             isTake(0);
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
-            dataGridViewCatalog = AddColumnToDataGridView.addColumnToPubHouses(dataGridViewCatalog);
+            dataGridViewCatalog = DGVColumn.addColumnToPubHouses(DGVColumn.Clear(dataGridViewCatalog));
             idAdd = 4;
         }
 
@@ -257,8 +255,7 @@ namespace New_Lib
         {
             isAdd(true);
             isTake(0);
-            dataGridViewCatalog = AddColumnToDataGridView.ClearDataGridView(dataGridViewCatalog);
-            dataGridViewCatalog = AddColumnToDataGridView.addColumnToBookCatalog(dataGridViewCatalog);
+            dataGridViewCatalog = DGVColumn.addColumnToBookCatalog(DGVColumn.Clear(dataGridViewCatalog));
             idAdd = 5;
         }
 
@@ -296,6 +293,9 @@ namespace New_Lib
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             AddToDataBase.add(idAdd, dataGridViewCatalog, tableName, Query);
+            buttonDelete.Visible = true;
+            buttonUpdate.Visible = true;
+            buttonUpdateOrAdd.Visible = false;
         }
 
         private void LibraryForm_Load(object sender, EventArgs e)
@@ -314,6 +314,22 @@ namespace New_Lib
             isCheck();
             tableName = ShowCatalog.ShowArticles(dataGridViewCatalog);
             isUser();
+        }
+
+        private void articleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isAdd(true);
+            isTake(0);
+            dataGridViewCatalog = DGVColumn.addColumnToArticles(DGVColumn.Clear(dataGridViewCatalog));
+            idAdd = 7;
+        }
+
+        private void panentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isAdd(true);
+            isTake(0);
+            dataGridViewCatalog = DGVColumn.addColumnToPatents(DGVColumn.Clear(dataGridViewCatalog));
+            idAdd = 6;
         }
     }
 }
