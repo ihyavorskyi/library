@@ -57,36 +57,6 @@ namespace New_Lib
             return data;
         }
 
-        public static List<string[]> genres(MySqlDataReader reader)
-        {
-            List<string[]> data = new List<string[]>();
-            while (reader.Read())
-            {
-                data.Add(new string[2]);
-                for (int i = 0; i < data[data.Count - 1].Length; i++)
-                {
-                    data[data.Count - 1][i] = reader[i].ToString();
-                }
-            }
-            reader.Close();
-            return data;
-        }
-
-        public static List<string[]> types(MySqlDataReader reader)
-        {
-            List<string[]> data = new List<string[]>();
-            while (reader.Read())
-            {
-                data.Add(new string[2]);
-                for (int i = 0; i < data[data.Count - 1].Length; i++)
-                {
-                    data[data.Count - 1][i] = reader[i].ToString();
-                }
-            }
-            reader.Close();
-            return data;
-        }
-
         public static List<string[]> books(MySqlDataReader reader)
         {
             List<string[]> data = new List<string[]>();
@@ -113,42 +83,12 @@ namespace New_Lib
             return data;
         }
 
-        public static List<string[]> pubHouse(MySqlDataReader reader)
+        public static List<string[]> responce(MySqlDataReader reader, int count)
         {
             List<string[]> data = new List<string[]>();
             while (reader.Read())
             {
-                data.Add(new string[5]);
-                for (int i = 0; i < data[data.Count - 1].Length; i++)
-                {
-                    data[data.Count - 1][i] = reader[i].ToString();
-                }
-            }
-            reader.Close();
-            return data;
-        }
-
-        public static List<string[]> members(MySqlDataReader reader)
-        {
-            List<string[]> data = new List<string[]>();
-            while (reader.Read())
-            {
-                data.Add(new string[5]);
-                for (int i = 0; i < data[data.Count - 1].Length; i++)
-                {
-                    data[data.Count - 1][i] = reader[i].ToString();
-                }
-            }
-            reader.Close();
-            return data;
-        }
-
-        public static List<string[]> authors(MySqlDataReader reader)
-        {
-            List<string[]> data = new List<string[]>();
-            while (reader.Read())
-            {
-                data.Add(new string[5]);
+                data.Add(new string[count]);
                 for (int i = 0; i < data[data.Count - 1].Length; i++)
                 {
                     data[data.Count - 1][i] = reader[i].ToString();

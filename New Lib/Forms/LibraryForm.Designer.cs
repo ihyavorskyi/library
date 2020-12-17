@@ -59,6 +59,8 @@
             this.buttonReturned = new System.Windows.Forms.Button();
             this.textBoxOnHands = new System.Windows.Forms.TextBox();
             this.dataGridViewOnHands = new System.Windows.Forms.DataGridView();
+            this.patentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.articlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCatalog)).BeginInit();
@@ -185,6 +187,8 @@
             this.menuStrip2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.booksToolStripMenuItem,
+            this.patentsToolStripMenuItem,
+            this.articlesToolStripMenuItem,
             this.authorsToolStripMenuItem,
             this.publishingHousesToolStripMenuItem,
             this.membersToolStripMenuItem,
@@ -293,7 +297,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1304, 509);
+            this.tabPage2.Size = new System.Drawing.Size(1163, 509);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "My books";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -316,7 +320,7 @@
             this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(3, 3);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1298, 29);
+            this.menuStrip1.Size = new System.Drawing.Size(1157, 29);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -335,7 +339,7 @@
             this.tabPage3.Controls.Add(this.dataGridViewOnHands);
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1304, 509);
+            this.tabPage3.Size = new System.Drawing.Size(1163, 509);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Books on hands";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -372,6 +376,20 @@
             this.dataGridViewOnHands.TabIndex = 3;
             this.dataGridViewOnHands.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewOnHands_CellContentClick);
             // 
+            // patentsToolStripMenuItem
+            // 
+            this.patentsToolStripMenuItem.Name = "patentsToolStripMenuItem";
+            this.patentsToolStripMenuItem.Size = new System.Drawing.Size(72, 25);
+            this.patentsToolStripMenuItem.Text = "Patents";
+            this.patentsToolStripMenuItem.Click += new System.EventHandler(this.patentsToolStripMenuItem_Click);
+            // 
+            // articlesToolStripMenuItem
+            // 
+            this.articlesToolStripMenuItem.Name = "articlesToolStripMenuItem";
+            this.articlesToolStripMenuItem.Size = new System.Drawing.Size(73, 25);
+            this.articlesToolStripMenuItem.Text = "Articles";
+            this.articlesToolStripMenuItem.Click += new System.EventHandler(this.articlesToolStripMenuItem_Click);
+            // 
             // LibraryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -382,6 +400,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "LibraryForm";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.LibraryForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -433,5 +452,7 @@
         private System.Windows.Forms.Button buttonUpdateOrAdd;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.ToolStripMenuItem patentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem articlesToolStripMenuItem;
     }
 }

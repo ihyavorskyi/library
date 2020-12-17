@@ -297,5 +297,23 @@ namespace New_Lib
         {
             AddToDataBase.add(idAdd, dataGridViewCatalog, tableName, Query);
         }
+
+        private void LibraryForm_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void patentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isCheck();
+            tableName = ShowCatalog.ShowPatents(dataGridViewCatalog);
+            isUser();
+        }
+
+        private void articlesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isCheck();
+            tableName = ShowCatalog.ShowArticles(dataGridViewCatalog);
+            isUser();
+        }
     }
 }
