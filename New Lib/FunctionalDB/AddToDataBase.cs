@@ -86,6 +86,7 @@ namespace New_Lib
                 string genre = dataGridView.Rows[i].Cells[5].Value.ToString();
                 string type = dataGridView.Rows[i].Cells[6].Value.ToString();
                 string pubHouse = dataGridView.Rows[i].Cells[7].Value.ToString();
+                string count = dataGridView.Rows[i].Cells[8].Value.ToString();
 
                 string query = "insert into book values (null,'" + title + "','" + pages + "','" + year + "','" + pubHouse + "','" + genre + "','" + type + "','" + count + "');";
                 NewQuery.executeNonQuery(query, conn);
