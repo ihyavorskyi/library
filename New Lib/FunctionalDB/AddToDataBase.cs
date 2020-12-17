@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Windows.Forms;
 
 namespace New_Lib
@@ -50,7 +51,6 @@ namespace New_Lib
                         tableName = ShowCatalog.ShowArticles(dataGridViewCatalog);
                         break;
                 }
-                MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             return tableName;
         }
@@ -69,7 +69,15 @@ namespace New_Lib
                     }
                 }
                 query += "');";
-                NewQuery.executeNonQuery(query, conn);
+                try
+                {
+                    NewQuery.executeNonQuery(query, conn);
+                    MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Eror! " + e.Message, "INFO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             conn.Close();
         }
@@ -104,6 +112,7 @@ namespace New_Lib
                 query = "insert into author_list values (null,'" + author + "','" + code_book + "');";
                 NewQuery.executeNonQuery(query, conn);
             }
+            MessageBox.Show("Added successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             conn.Close();
         }
     }
