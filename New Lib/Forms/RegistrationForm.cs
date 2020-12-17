@@ -1,6 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Windows.Forms;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace New_Lib
 {
@@ -35,14 +37,21 @@ namespace New_Lib
             }
         }
 
-        private void checkAccount(string name, string surname, string adress, string phoneNum, string password)
+        private void checkAccount(string name, string surname, string adress, string password, string phoneNum)
         {
             string connString = GetConnection();
+
+            byte[] tmpHash;
+
+            byte[] tmpSource = ASCIIEncoding.ASCII.GetBytes(password);
+            tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
+
+            password = ByteArrayToString(tmpHash);
 
             MySqlConnection conn = new MySqlConnection(connString);
             conn.Open();
 
-            string query = "insert into members values(null,'" + name + "','" + surname + "','" + adress + "','" + password + "','" + phoneNum + "','User')";
+            string query = "insert into members values(null,'" + name + "','" + surname + "','" + adress + "','" + phoneNum + "','" + password  + "','User')";
 
             NewQuery.executeNonQuery(query, conn);
 
@@ -62,6 +71,21 @@ namespace New_Lib
             SingInForm form = new SingInForm();
             form.Show();
             Close();
+        }
+
+        private static string ByteArrayToString(byte[] arrInput)
+        {
+            int i;
+            StringBuilder sOutput = new StringBuilder(arrInput.Length);
+            for (i = 0; i < arrInput.Length - 1; i++)
+            {
+                sOutput.Append(arrInput[i].ToString("X2"));
+            }
+            return sOutput.ToString();
+        }
+
+        private void RegistrationForm_Load(object sender, EventArgs e)
+        {
         }
     }
 }
